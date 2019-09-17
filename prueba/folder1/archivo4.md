@@ -1,0 +1,1 @@
+[link1](https://translate.google.com/?hl=es#view=home&op=translate&sl=en&tl=es&text=serializes%20to%20the%20same%20string).
