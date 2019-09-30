@@ -1,10 +1,24 @@
-import { routAbsolute } from './route.js';
+import fs from 'fs';
+import { readLinks } from './route.js';
+import { validateLinks } from './link.js';
 
-// verifiConten(routAbsolute('E:/PROYECTOS DE LABORATORIA/proyecto_4')).then((Stats) => {
-//   if (Stats.isFile() !== true) {
-//     console.log(Stats.isDirectory());
-//   }
-// }).catch((error) => {
-//   console.log(error);
+// const ruta = 'E:/PROYECT_DE_LAB/proyecto_4/LIM010-fe-md-links/prueba/folder1/folder2';
+
+const mdLinks = (path, options) => new Promise((resolve, reject) => {
+  if (fs.existsSync(path)) {
+    if (options.validate === true) {
+      resolve(validateLinks(path));
+    } else {
+      resolve(readLinks(path));
+    }
+  } else {
+    reject(new Error('no existe ruta'));
+  }
+});
+
+// mdLinks(ruta, { validate: true }).then((val) => {
+//   console.log(val);
 // });
-console.log(routAbsolute('/PROYECTOS DE LABORATORIA/proyecto_4/LIM010-fe-md-links/prueba'));
+export {
+  mdLinks,
+};

@@ -14,12 +14,17 @@
   },
   "author": "Liliana Gonzales",
   "license": "MIT",
+  "bin": {
+    "md-links": "./lib/cli.js"
+  },
   "bugs": {
     "url": "https://github.com/lili14gon/LIM010-fe-md-links/issues"
   },
   "homepage": "https://github.com/lili14gon/LIM010-fe-md-links#readme",
   "dependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.6.0"
+    "@babel/plugin-transform-modules-commonjs": "^7.6.0",
+    "marked": "^0.7.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",

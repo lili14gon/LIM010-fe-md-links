@@ -1,14 +1,16 @@
 import path from 'path';
 import fs from 'fs';
-// import { arrayExpression } from '@babel/types';
+import marked from 'marked';
+
+// const ruta = 'E:/PROYECT_DE_LAB/proyecto_4/LIM010-fe-md-links/prueba/folder1/folder2';
 
 const routAbsolute = (route) => {
   if (path.isAbsolute(route) === false) {
-    return path.resolve(route);
+    const rout1 = path.resolve(route);
+    return rout1;
   }
   return route;
 };
-
 const verificFile = (file) => {
   if (fs.statSync(file).isFile()) {
     return true;
@@ -16,31 +18,46 @@ const verificFile = (file) => {
   return false;
 };
 
-const searchFileoFDirectory = (route) => {
+const searchFileoFDirectory = ((rout) => {
   let array = [];
-  const routeFile = routAbsolute(route);
+  const routeFile = routAbsolute(rout);
   if (verificFile(routeFile) === true) {
-    // console.log(routeFile, path.extname(routeFile) === '.md');
     if (path.extname(routeFile) === '.md') {
       array.push(routeFile);
     }
-    return array;
-  }
-  const file = fs.readdirSync(routeFile);
-  for (let i = 0; i < file.length; i += 1) {
-    const newDir = path.join(routeFile, file[i]);
-    array = array.concat(searchFileoFDirectory(newDir));
+  } else {
+    const file = fs.readdirSync(routeFile);
+    for (let i = 0; i < file.length; i += 1) {
+      const newDir = path.join(routeFile, file[i]);
+      array = array.concat(searchFileoFDirectory(newDir));
+    }
   }
   return array;
-};
+});
 
-// console.log(verificFile('E:/PROYECTOS DE LABORATORIA/proyecto_4/LIM010-fe-md-links/prueba/folder1'));
-// console.log(routAbsolute('E:/PROYECTOS DE LABORATORIA/proyecto_4/LIM010-fe-md-links/prueba/folder1'));
-// console.log(fs.readFileSync('E:/PROYECTOS DE LABORATORIA/proyecto_4/LIM010-fe-md-links/prueba/archivo1.md'));
-// console.log(searchFileoFDirectory('E:/PROYECTOS DE LABORATORIA/proyecto_4/LIM010-fe-md-links/prueba/folder1/folder2'));
+const readLinks = (route) => {
+  const array = [];
+  const rend = new marked.Renderer();
+  const file = searchFileoFDirectory(route);
+  file.forEach((ele) => {
+    const routa1 = fs.readFileSync(ele).toString();
+    rend.link = (href1, title, text1) => {
+      array.push({
+        href: href1,
+        text: text1,
+        file: ele,
+      });
+    };
+    marked(routa1, { renderer: rend });
+  });
+  return array;
+};
+// console.log(readLinks(ruta));
+// console.log(routAbsolute('./prueba'));
+
 export {
   routAbsolute,
   verificFile,
   searchFileoFDirectory,
-  // fileMardow,
+  readLinks,
 };
