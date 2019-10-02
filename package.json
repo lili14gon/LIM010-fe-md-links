@@ -27,8 +27,8 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
-    "@babel/core": "^7.6.0",
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
     "babel-jest": "^24.8.0",
     "eslint": "^6.3.0",
     "eslint-config-airbnb-base": "^14.0.0",
